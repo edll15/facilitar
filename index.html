@@ -10,7 +10,6 @@
       background-color: #eaf7f0;
     }
 
-    /* Barra superior */
     .header {
       background-color: #1e7d4f;
       color: white;
@@ -23,7 +22,6 @@
       left: 0;
     }
 
-    /* Container principal */
     .container {
       max-width: 800px;
       margin: 100px auto 20px auto;
@@ -45,7 +43,7 @@
 
     textarea {
       width: 100%;
-      height: 130px;
+      height: 120px;
       margin-top: 5px;
       margin-bottom: 15px;
       padding: 10px;
@@ -93,10 +91,16 @@
 <h2>Gerador de Resumo de Alta</h2>
 
 <label>Anamnese:</label>
-<textarea id="anamnese" placeholder="Cole aqui a anamnese completa..."></textarea>
+<textarea id="anamnese" placeholder="Cole aqui a anamnese..."></textarea>
 
 <label>Reavaliação:</label>
 <textarea id="reavaliacao" placeholder="Cole aqui a reavaliação..."></textarea>
+
+<label>Exames laboratoriais:</label>
+<textarea id="lab" placeholder="Ex: Hb 12, leucócitos 8.000..."></textarea>
+
+<label>Exames de imagem:</label>
+<textarea id="imagem" placeholder="Ex: RX tórax sem alterações..."></textarea>
 
 <button onclick="gerarResumo()">Gerar Resumo</button>
 
@@ -108,6 +112,8 @@
 function gerarResumo() {
   const anamnese = document.getElementById("anamnese").value;
   const reavaliacao = document.getElementById("reavaliacao").value;
+  const lab = document.getElementById("lab").value;
+  const imagem = document.getElementById("imagem").value;
 
   function extrairDiagnostico(texto) {
     const t = texto.toLowerCase();
@@ -121,7 +127,9 @@ function gerarResumo() {
     return "Quadro clínico em investigação";
   }
 
-  const diagnostico = extrairDiagnostico(anamnese + " " + reavaliacao);
+  const diagnostico = extrairDiagnostico(
+    anamnese + " " + reavaliacao + " " + lab + " " + imagem
+  );
 
   const resumo = `
 RESUMO DE ALTA
@@ -133,6 +141,12 @@ ${anamnese}
 
 EVOLUÇÃO / REAVALIAÇÃO:
 ${reavaliacao}
+
+EXAMES LABORATORIAIS:
+${lab || "Não realizados ou sem alterações relevantes."}
+
+EXAMES DE IMAGEM:
+${imagem || "Não realizados ou sem alterações relevantes."}
 
 DIAGNÓSTICO:
 ${diagnostico}
