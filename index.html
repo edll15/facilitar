@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resumo de Alta Inteligente</title>
+</head>
+<body>
+
+<h2>Gerador de Resumo de Alta</h2>
+
+<h4>Anamnese:</h4>
+<textarea id="anamnese" rows="6" cols="50"></textarea><br><br>
+
+<h4>Reavaliação:</h4>
+<textarea id="reavaliacao" rows="6" cols="50"></textarea><br><br>
+
+<button onclick="gerarResumo()">Gerar Resumo</button>
+
+<h3>Resumo de Alta:</h3>
+<pre id="resultado"></pre>
+
+<script>
+function gerarResumo() {
+  const anamnese = document.getElementById("anamnese").value;
+  const reavaliacao = document.getElementById("reavaliacao").value;
+
+  function extrairDiagnostico(texto) {
+    const palavras = texto.toLowerCase();
+    if (palavras.includes("pneumonia")) return "Quadro compatível com pneumonia";
+    if (palavras.includes("lombalgia")) return "Lombalgia";
+    if (palavras.includes("cefaleia")) return "Cefaleia";
+    return "Quadro clínico em investigação";
+  }
+
+  const diagnostico = extrairDiagnostico(anamnese + " " + reavaliacao);
+
+  const resumo = `
+RESUMO DE ALTA:
+
+ANAMNESE:
+${anamnese}
+
+REAVALIAÇÃO:
+${reavaliacao}
+
+DIAGNÓSTICO:
+${diagnostico}
+
+CONDUTA:
+Paciente avaliado e medicado, com melhora clínica.
+
+ALTA:
+Recebe alta com orientações.
+
+ORIENTAÇÕES:
+- Retornar se piora
+- Seguir medicações
+`;
+
+  document.getElementById("resultado").innerText = resumo;
+}
+</script>
+
+</body>
+</html>
